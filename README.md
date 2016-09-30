@@ -21,8 +21,9 @@
 
 
 ## TODO
-* RESTful API Server 만들기
+* ~~RESTful API Server 만들기~~
 * 웹 화면 만들기
+  * ~~회원가입, 로그인, 로그아웃~~
 
 ## 참고
 * https://velopert.com/1921 Express 와 React.js 를 사용한 웹 어플리케이션 만들기
