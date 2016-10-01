@@ -36,6 +36,7 @@ router.post('/', (req, res) =>{
 
     // CREATE NEW Idiom
     let idiom = new Idiom({
+        writer : req.session.loginInfo.username,
         contents : req.body.contents,
         means : req.body.means,
         examples : req.body.examples,
@@ -104,19 +105,19 @@ router.put('/:id', (req, res) =>{
         }
 
         // IF EXISTS, CHECK WRITER
-        // 필요할 때 나중에 추가하자
-        //if(idiom.writer != req.session.loginInfo.username){
-        //    return res.status(403).json({
-        //        error : "PERMISSION FAILURE",
-        //        code : 5
-        //    });
-        //}
+        if(idiom.writer != req.session.loginInfo.username){
+            return res.status(403).json({
+                error : "PERMISSION FAILURE",
+                code : 5
+            });
+        }
 
         // MODIFY AND SAVE IN DATABASE
         idiom.contents = req.body.contents;
         idiom.means = req.body.means;
         idiom.examples = req.body.examples;
         idiom.date.edited = new Date();
+        idiom.is_edited = true;
 
         idiom.save((err, idiom) =>{
             if(err) throw err;
@@ -165,13 +166,12 @@ router.delete('/:id', (req, res) =>{
                 code : 3
             });
         }
-        // 나중에 필요할때 추가하자
-        //if(idiom.writer != req.session.loginInfo.username) {
-        //    return res.status(403).json({
-        //        error: "PERMISSION FAILURE",
-        //        code: 4
-        //    });
-        //}
+        if(idiom.writer != req.session.loginInfo.username){
+            return res.status(403).json({
+                error : "PERMISSION FAILURE",
+                code : 4
+            });
+        }
 
         // REMOVE THE Idiom
         Idiom.remove({_id : req.params.id}, err =>{
@@ -193,6 +193,52 @@ router.get('/', (req, res) =>{
             if(err) throw err;
             res.json(idioms);
         });
+});
+
+/*
+ READ ADDITIONAL (OLD/NEW) Idiom: GET /api/idiom/:listType/:id
+ */
+router.get('/:listType/:id', (req, res) =>{
+    let listType = req.params.listType;
+    let id = req.params.id;
+
+    // CHECK LIST TYPE VALIDITY
+    if(listType !== 'old' && listType !== 'new'){
+        return res.status(400).json({
+            error : "INVALID LISTTYPE",
+            code : 1
+        });
+    }
+
+    // CHECK Idiom ID VALIDITY
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({
+            error : "INVALID ID",
+            code : 2
+        });
+    }
+
+    let objId = new mongoose.Types.ObjectId(req.params.id);
+
+    if(listType === 'new'){
+        // GET NEWER Idiom
+        Idiom.find({_id : {$gt : objId}})
+            .sort({_id : -1})
+            .limit(6)
+            .exec((err, idioms) =>{
+                if(err) throw err;
+                return res.json(idioms);
+            });
+    }else{
+        // GET OLDER Idiom
+        Idiom.find({_id : {$lt : objId}})
+            .sort({_id : -1})
+            .limit(6)
+            .exec((err, idioms) =>{
+                if(err) throw err;
+                return res.json(idioms);
+            });
+    }
 });
 
 export default router;
