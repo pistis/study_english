@@ -6,9 +6,9 @@ const Idiom = new Schema({
     writer : String,
     contents : String,
     means : String,
+    examples : String,
     importance : Number,
     starred : [String],
-    examples : [String],
     date : {
         created : {type : Date, default : Date.now},
         edited : {type : Date, default : Date.now}
