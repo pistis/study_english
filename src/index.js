@@ -21,6 +21,7 @@ ReactDOM.render(
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Card}/>
+                <Route path="card" component={Card}/>
                 <Route path="login" component={Login}/>
                 <Route path="register" component={Register}/>
             </Route>

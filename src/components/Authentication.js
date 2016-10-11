@@ -101,7 +101,7 @@ class Authentication extends React.Component {
                             <a className="btn btn-lg btn-success btn-block" onClick={this.handleLogin}>Login</a>
                         </fieldset>
                     </form>
-                    <h5>New Here? <Link to="/register">Create an account</Link></h5>
+                    { /* <h5>New Here? <Link to="/register">Create an account</Link></h5> */ }
                 </div>
             </div>
         );
