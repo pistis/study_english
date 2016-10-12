@@ -11,7 +11,7 @@ class Navigation extends React.Component {
             <nav style={navStyle} className="navbar navbar-default navbar-static-top" role="navigation">
                 <HeaderLeft></HeaderLeft>
                 <HeaderRight isLoggedIn={this.props.isLoggedIn} onLogout={this.props.onLogout}></HeaderRight>
-                <SidebarLeft></SidebarLeft>
+                <SidebarLeft isLoggedIn={this.props.isLoggedIn}></SidebarLeft>
             </nav>
         );
     }
