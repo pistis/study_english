@@ -8,7 +8,7 @@ class Card extends React.Component {
 
         const edit = (
             <a href="#" className="btn btn-default btn-xs pull-right" role="button">
-                <i class="glyphicon glyphicon-edit"></i>
+                <i className="glyphicon glyphicon-edit"></i>
             </a>
         );
 

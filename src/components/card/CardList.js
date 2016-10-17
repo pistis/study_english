@@ -1,4 +1,5 @@
 import React from 'react';
+import InfiniteGrid from 'react-infinite-grid';
 import { Card } from 'components';
 
 class CardList extends React.Component {
@@ -14,8 +15,8 @@ class CardList extends React.Component {
         };
 
         return (
-            <div class="row">
-                <div class="col-md-12">
+            <div className="row">
+                <div className="col-md-12">
                     {mapToComponents(this.props.data)}
                 </div>
             </div>
@@ -24,13 +25,13 @@ class CardList extends React.Component {
 }
 
 CardList.propTypes = {
-    data : React.PropTypes.array,
-    currentUser : React.PropTypes.string
+    data: React.PropTypes.array,
+    currentUser: React.PropTypes.string
 };
 
 CardList.defaultProps = {
-    data : [],
-    currentUser : ''
+    data: [],
+    currentUser: ''
 };
 
 export default CardList;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, CardWrite } from 'components';
+import { CardList, CardWrite } from 'components';
 import { connect } from 'react-redux';
 import { cardPostRequest, cardListRequest } from 'actions/card';
 
@@ -12,6 +12,14 @@ class Card extends React.Component {
         this.state = {
             loadingState: false
         };
+    }
+
+    componentDidMount(){
+        this.props.cardListRequest(true).then(
+            () =>{
+                console.log('load success card list');
+            }
+        );
     }
 
     handlePost(contents, means, examples){
@@ -47,7 +55,9 @@ class Card extends React.Component {
         const cardWrite = ( <CardWrite onPost={this.handlePost}/> );
         return (
             <div>
-                <Page />
+                <div id="page-wrapper">
+                    <CardList data={this.props.cardData} currentUser={this.props.currentUser}/>
+                </div>
                 { this.props.isLoggedIn ? cardWrite : undefined }
             </div>
         );
@@ -58,7 +68,8 @@ const mapStateToProps = (state) =>{
     return {
         isLoggedIn: state.authentication.status.isLoggedIn,
         currentUser: state.authentication.status.currentUser,
-        postStatus: state.card.post
+        postStatus: state.card.post,
+        cardData: state.card.list.data
     };
 };
 
@@ -66,6 +77,9 @@ const mapDispatchToProps = (dispatch) =>{
     return {
         cardPostRequest: (contents, means, examples) =>{
             return dispatch(cardPostRequest(contents, means, examples));
+        },
+        cardListRequest: (isInitial, listType, id, username) =>{
+            return dispatch(cardListRequest(isInitial, listType, id, username));
         }
     };
 };
