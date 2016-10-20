@@ -1,5 +1,21 @@
+.grid_wrapper {
+    padding: 50px;
+}
+
 .grid {
     list-style: none;
     padding: 0;
     margin: 0 auto;
+}
+
+.grid-item {
+    border-radius: 3px;
+}
+
+.grid-item *:first-child {
+    margin-top: 0;
+}
+
+.grid-item *:last-child {
+    margin-bottom: 0;
 }
