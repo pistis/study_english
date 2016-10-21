@@ -42,7 +42,8 @@
   * ~~Login~~
   * ~~Logout~~
   * ~~Insert Card~~
-  * List Card
+  * ~~List Card~~
+  * View Card
   * Delete Card
   * Update Card
 * Modules
